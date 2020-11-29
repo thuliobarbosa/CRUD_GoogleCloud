@@ -1,0 +1,36 @@
+package br.edu.libertas.model;
+
+import java.io.PrintWriter;
+import java.util.LinkedList;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
+
+import br.edu.libertas.bd.ProdutoDao;
+import br.edu.libertas.dto.Produto;
+
+public class ProdutoConsultar implements Modelo {
+
+	@Override
+	public void execute(HttpServletRequest request, HttpServletResponse response) {
+		
+		try {
+			ProdutoDao pdao = new ProdutoDao();
+			
+			int idproduto = Integer.parseInt(request.getParameter("idpessoa"));
+			
+			Produto p = pdao.consutar(idproduto);
+			Gson gson = new Gson();
+			
+			PrintWriter writer = response.getWriter();
+			writer.print(gson.toJson(p));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+}
